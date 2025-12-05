@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { apiClient } from "@/lib/api-client";
-import { Star } from "lucide-react";
+import { DashboardShell } from "@/components/layout/DashboardShell";
+import { FilePlus, ClipboardList, Star, MapPin, Wallet, Activity, Calendar, Users } from "lucide-react";
 
 interface ClientRequest {
   id: string;
@@ -26,7 +27,7 @@ interface Caregiver {
 }
 
 export default function ClientDashboard() {
-  const { userId, role, name, isAuthenticated, logout } = useAuth();
+  const { userId, role, isAuthenticated } = useAuth();
   const router = useRouter();
   const [requests, setRequests] = useState<ClientRequest[]>([]);
   const [caregivers, setCaregivers] = useState<Caregiver[]>([]);
@@ -110,41 +111,56 @@ export default function ClientDashboard() {
     }
   };
 
+  const activeRequests = requests.filter((r) => r.status === "open").length;
+  const caregiversInService = requests.reduce((acc, r) => acc + r.interestedCaregivers.length, 0);
+  const nextRequest = requests.find((r) => r.status === "open");
+
   if (loading) {
     return (
-      <div className="cp-page">
-        <div className="cp-container">
-          <div className="cp-card" style={{ textAlign: "center", padding: "var(--spacing-3xl)" }}>
-            <p>Carregando...</p>
-          </div>
+      <DashboardShell title="Painel do contratante" roleLabel="CONTRATANTE">
+        <div className="cp-card" style={{ textAlign: "center", padding: "var(--spacing-3xl)" }}>
+          <p>Carregando...</p>
         </div>
-      </div>
+      </DashboardShell>
     );
   }
 
   return (
-    <div className="cp-page">
-      <div className="cp-container">
-        {/* Header */}
-        <div className="cp-page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-          <div>
-            <h1>Painel do contratante</h1>
-            <p>Crie pedidos de cuidado e acompanhe quem está atendendo sua família.</p>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-md)" }}>
-            <div className="cp-user-pill">
-              <span>{name || "Usuário"}</span>
-              <span className="cp-user-pill-role">Contratante</span>
-            </div>
-            <button className="cp-btn cp-btn-ghost" onClick={logout} style={{ padding: "var(--spacing-sm) var(--spacing-md)" }}>
-              Sair
-            </button>
-          </div>
+    <DashboardShell
+      title="Painel do contratante"
+      subtitle="Crie pedidos de cuidado e acompanhe quem está atendendo sua família."
+      roleLabel="CONTRATANTE"
+    >
+      {/* CAMADA 1 - Resumo Rápido */}
+      <div className="cp-metrics-summary">
+        <div className="cp-metric-summary-card">
+          <div className="cp-metric-summary-value">{activeRequests}</div>
+          <p className="cp-metric-summary-label">Pedidos ativos</p>
         </div>
+        <div className="cp-metric-summary-card">
+          <div className="cp-metric-summary-value">{caregiversInService}</div>
+          <p className="cp-metric-summary-label">Cuidadores em atendimento</p>
+        </div>
+        <div className="cp-metric-summary-card">
+          <div className="cp-metric-summary-value">
+            {nextRequest ? (
+              <>
+                <Calendar className="cp-icon-sm" style={{ width: "20px", height: "20px", display: "inline", marginRight: "0.25rem" }} />
+                {new Date(nextRequest.schedule.startDate).toLocaleDateString("pt-BR", { day: "2-digit", month: "short" })}
+              </>
+            ) : (
+              "—"
+            )}
+          </div>
+          <p className="cp-metric-summary-label">Próximo atendimento</p>
+        </div>
+      </div>
 
-        {/* Meus Pedidos */}
-        <div className="cp-card" style={{ marginBottom: "var(--spacing-xl)" }}>
-          <div className="cp-card-header" style={{ justifyContent: "space-between" }}>
+      {/* CAMADA 2 - Cards Grandes */}
+      <div className="cp-dashboard-grid">
+        {/* Card 1: Meus Pedidos */}
+        <div className="cp-card">
+          <div className="cp-card-header">
             <div>
               <h3 className="cp-card-title">Meus pedidos de cuidado</h3>
               <p className="cp-card-subtitle">{requests.length} pedido(s) criado(s)</p>
@@ -162,20 +178,14 @@ export default function ClientDashboard() {
             <form onSubmit={handleSubmit} style={{ marginTop: "var(--spacing-xl)", paddingTop: "var(--spacing-xl)", borderTop: "1px solid var(--color-gray-200)" }}>
               <div className="cp-grid-2" style={{ marginBottom: "var(--spacing-md)" }}>
                 <div>
-                  <label style={{ display: "block", marginBottom: "var(--spacing-sm)", fontSize: "var(--font-size-sm)", fontWeight: 500 }}>
-                    Tipo de cuidado *
+                  <label className="cp-label">
+                    Tipo de cuidado <span className="cp-required">*</span>
                   </label>
                   <select
                     value={formData.careType}
                     onChange={(e) => setFormData({ ...formData, careType: e.target.value })}
+                    className="cp-input"
                     required
-                    style={{
-                      width: "100%",
-                      padding: "var(--spacing-md)",
-                      fontSize: "var(--font-size-base)",
-                      border: "1px solid var(--color-gray-300)",
-                      borderRadius: "var(--radius-lg)",
-                    }}
                   >
                     <option value="">Selecione...</option>
                     <option value="elderly">Idosos</option>
@@ -184,120 +194,83 @@ export default function ClientDashboard() {
                   </select>
                 </div>
                 <div>
-                  <label style={{ display: "block", marginBottom: "var(--spacing-sm)", fontSize: "var(--font-size-sm)", fontWeight: 500 }}>
-                    Data de início *
+                  <label className="cp-label">
+                    Data de início <span className="cp-required">*</span>
                   </label>
                   <input
                     type="date"
                     value={formData.startDate}
                     onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+                    className="cp-input"
                     required
-                    style={{
-                      width: "100%",
-                      padding: "var(--spacing-md)",
-                      fontSize: "var(--font-size-base)",
-                      border: "1px solid var(--color-gray-300)",
-                      borderRadius: "var(--radius-lg)",
-                    }}
                   />
                 </div>
               </div>
 
-              <div style={{ marginBottom: "var(--spacing-md)" }}>
-                <label style={{ display: "block", marginBottom: "var(--spacing-sm)", fontSize: "var(--font-size-sm)", fontWeight: 500 }}>
-                  Horários (separados por vírgula) *
+              <div className="cp-field-group">
+                <label className="cp-label">
+                  Horários (separados por vírgula) <span className="cp-required">*</span>
                 </label>
                 <input
                   type="text"
                   value={formData.timeSlots}
                   onChange={(e) => setFormData({ ...formData, timeSlots: e.target.value })}
                   placeholder="Ex: 08:00-12:00, 14:00-18:00"
+                  className="cp-input"
                   required
-                  style={{
-                    width: "100%",
-                    padding: "var(--spacing-md)",
-                    fontSize: "var(--font-size-base)",
-                    border: "1px solid var(--color-gray-300)",
-                    borderRadius: "var(--radius-lg)",
-                  }}
                 />
               </div>
 
-              <div style={{ marginBottom: "var(--spacing-md)" }}>
-                <label style={{ display: "block", marginBottom: "var(--spacing-sm)", fontSize: "var(--font-size-sm)", fontWeight: 500 }}>
-                  Endereço *
+              <div className="cp-field-group">
+                <label className="cp-label">
+                  Endereço <span className="cp-required">*</span>
                 </label>
                 <input
                   type="text"
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  className="cp-input"
                   required
-                  style={{
-                    width: "100%",
-                    padding: "var(--spacing-md)",
-                    fontSize: "var(--font-size-base)",
-                    border: "1px solid var(--color-gray-300)",
-                    borderRadius: "var(--radius-lg)",
-                  }}
                 />
               </div>
 
               <div className="cp-grid-2" style={{ marginBottom: "var(--spacing-md)" }}>
                 <div>
-                  <label style={{ display: "block", marginBottom: "var(--spacing-sm)", fontSize: "var(--font-size-sm)", fontWeight: 500 }}>
-                    Cidade *
+                  <label className="cp-label">
+                    Cidade <span className="cp-required">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    className="cp-input"
                     required
-                    style={{
-                      width: "100%",
-                      padding: "var(--spacing-md)",
-                      fontSize: "var(--font-size-base)",
-                      border: "1px solid var(--color-gray-300)",
-                      borderRadius: "var(--radius-lg)",
-                    }}
                   />
                 </div>
                 <div>
-                  <label style={{ display: "block", marginBottom: "var(--spacing-sm)", fontSize: "var(--font-size-sm)", fontWeight: 500 }}>
-                    Estado *
+                  <label className="cp-label">
+                    Estado <span className="cp-required">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.state}
                     onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                    className="cp-input"
                     required
-                    style={{
-                      width: "100%",
-                      padding: "var(--spacing-md)",
-                      fontSize: "var(--font-size-base)",
-                      border: "1px solid var(--color-gray-300)",
-                      borderRadius: "var(--radius-lg)",
-                    }}
                   />
                 </div>
               </div>
 
-              <div style={{ marginBottom: "var(--spacing-lg)" }}>
-                <label style={{ display: "block", marginBottom: "var(--spacing-sm)", fontSize: "var(--font-size-sm)", fontWeight: 500 }}>
-                  Detalhes e observações *
+              <div className="cp-field-group">
+                <label className="cp-label">
+                  Detalhes e observações <span className="cp-required">*</span>
                 </label>
                 <textarea
                   value={formData.details}
                   onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                   rows={4}
+                  className="cp-textarea"
                   required
-                  style={{
-                    width: "100%",
-                    padding: "var(--spacing-md)",
-                    fontSize: "var(--font-size-base)",
-                    border: "1px solid var(--color-gray-300)",
-                    borderRadius: "var(--radius-lg)",
-                    fontFamily: "inherit",
-                  }}
                 />
               </div>
 
@@ -312,62 +285,77 @@ export default function ClientDashboard() {
             </form>
           )}
 
-          {requests.length === 0 ? (
-            <p style={{ color: "var(--color-gray-500)", textAlign: "center", padding: "var(--spacing-xl)" }}>
-              Você ainda não criou nenhum pedido de cuidado.
-            </p>
-          ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)", marginTop: "var(--spacing-lg)" }}>
-              {requests.map((request) => (
-                <div
-                  key={request.id}
-                  style={{
-                    padding: "var(--spacing-lg)",
-                    border: "1px solid var(--color-gray-200)",
-                    borderRadius: "var(--radius-lg)",
-                    backgroundColor: "var(--color-gray-50)",
-                  }}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "var(--spacing-sm)" }}>
-                    <div>
-                      <strong>
-                        {request.careType === "elderly" && "Cuidado de Idosos"}
-                        {request.careType === "children" && "Cuidado de Crianças"}
-                        {request.careType === "special_needs" && "Cuidado Especializado"}
-                      </strong>
-                      <span
-                        className="feature-tag"
-                        style={{
-                          marginLeft: "var(--spacing-sm)",
-                          backgroundColor: request.status === "open" ? "var(--color-primary)" : "var(--color-gray-400)",
-                          color: "white",
-                        }}
-                      >
-                        {request.status}
-                      </span>
-                    </div>
-                  </div>
-                  <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-600)", marginBottom: "var(--spacing-xs)" }}>
-                    <strong>Local:</strong> {request.location.address}, {request.location.city}, {request.location.state}
+          {!showForm && (
+            <>
+              {requests.length === 0 ? (
+                <div className="cp-empty-state">
+                  <ClipboardList className="cp-empty-state-icon cp-icon-lg" style={{ width: "48px", height: "48px" }} />
+                  <h4 className="cp-empty-state-title">Você ainda não criou nenhum pedido de cuidado.</h4>
+                  <p className="cp-empty-state-text">
+                    Crie seu primeiro pedido para começar a receber propostas de cuidadores qualificados.
                   </p>
-                  <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-600)", marginBottom: "var(--spacing-xs)" }}>
-                    <strong>Horários:</strong> {request.schedule.timeSlots.join(", ")}
-                  </p>
-                  <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-700)", marginBottom: "var(--spacing-sm)" }}>
-                    {request.details}
-                  </p>
-                  <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-600)" }}>
-                    <strong>Interessados:</strong> {request.interestedCaregivers.length} cuidador(es)
-                  </p>
+                  <button
+                    className="cp-btn cp-btn-secondary"
+                    onClick={() => setShowForm(true)}
+                    style={{ marginTop: "var(--spacing-md)" }}
+                  >
+                    Criar primeiro pedido
+                  </button>
                 </div>
-              ))}
-            </div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)", marginTop: "var(--spacing-lg)" }}>
+                  {requests.map((request) => (
+                    <div
+                      key={request.id}
+                      style={{
+                        padding: "var(--spacing-lg)",
+                        border: "1px solid var(--color-gray-200)",
+                        borderRadius: "var(--radius-lg)",
+                        backgroundColor: "var(--color-gray-50)",
+                      }}
+                    >
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "var(--spacing-sm)" }}>
+                        <div>
+                          <strong>
+                            {request.careType === "elderly" && "Cuidado de Idosos"}
+                            {request.careType === "children" && "Cuidado de Crianças"}
+                            {request.careType === "special_needs" && "Cuidado Especializado"}
+                          </strong>
+                          <span
+                            className="feature-tag"
+                            style={{
+                              marginLeft: "var(--spacing-sm)",
+                              backgroundColor: request.status === "open" ? "var(--color-primary)" : "var(--color-gray-400)",
+                              color: "white",
+                            }}
+                          >
+                            {request.status}
+                          </span>
+                        </div>
+                      </div>
+                      <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-600)", marginBottom: "var(--spacing-xs)" }}>
+                        <strong>Local:</strong> {request.location.address}, {request.location.city}, {request.location.state}
+                      </p>
+                      <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-600)", marginBottom: "var(--spacing-xs)" }}>
+                        <strong>Horários:</strong> {request.schedule.timeSlots.join(", ")}
+                      </p>
+                      <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-700)", marginBottom: "var(--spacing-sm)" }}>
+                        {request.details}
+                      </p>
+                      <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-600)" }}>
+                        <strong>Interessados:</strong> {request.interestedCaregivers.length} cuidador(es)
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
 
-        {/* Cuidadores Recomendados */}
+        {/* Card 2: Cuidadores Recomendados */}
         <div className="cp-card">
-          <div className="cp-card-header" style={{ justifyContent: "space-between" }}>
+          <div className="cp-card-header">
             <div>
               <h3 className="cp-card-title">Cuidadores recomendados</h3>
               <p className="cp-card-subtitle">{caregivers.length} cuidador(es) disponível(eis)</p>
@@ -380,53 +368,48 @@ export default function ClientDashboard() {
               Ver todos
             </button>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)", marginTop: "var(--spacing-lg)" }}>
-            {caregivers.length === 0 ? (
-              <p style={{ color: "var(--color-gray-500)", textAlign: "center", padding: "var(--spacing-lg)" }}>
-                Nenhum cuidador disponível no momento.
+
+          {caregivers.length === 0 ? (
+            <div className="cp-empty-state">
+              <Users className="cp-empty-state-icon cp-icon-lg" style={{ width: "48px", height: "48px" }} />
+              <h4 className="cp-empty-state-title">Nenhum cuidador disponível</h4>
+              <p className="cp-empty-state-text">
+                Não há cuidadores cadastrados no momento.
               </p>
-            ) : (
-              caregivers.map((caregiver) => (
+            </div>
+          ) : (
+            <div className="cp-caregiver-list">
+              {caregivers.map((caregiver) => (
                 <div
                   key={caregiver.id}
-                  style={{
-                    padding: "var(--spacing-md)",
-                    border: "1px solid var(--color-gray-200)",
-                    borderRadius: "var(--radius-lg)",
-                    cursor: "pointer",
-                    transition: "all var(--transition-base)",
-                  }}
+                  className="cp-caregiver-item"
                   onClick={() => router.push(`/caregivers/${caregiver.id}`)}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "var(--color-primary)";
-                    e.currentTarget.style.boxShadow = "var(--shadow-sm)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "var(--color-gray-200)";
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
                 >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "var(--spacing-xs)" }}>
-                    <strong style={{ fontSize: "var(--font-size-base)" }}>Cuidador</strong>
-                    <span style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-600)", display: "flex", alignItems: "center", gap: "0.25rem" }}>
-                      {caregiver.rating.toFixed(1)}
-                      <Star className="cp-icon-sm" style={{ width: "12px", height: "12px", color: "#f59e0b" }} />
-                    </span>
+                  <div className="cp-caregiver-main">
+                    <div className="cp-caregiver-name">Cuidador</div>
+                    <p className="cp-caregiver-bio">{caregiver.bio.substring(0, 80)}...</p>
+                    <div className="cp-caregiver-meta">
+                      <span>
+                        <MapPin className="cp-icon-sm" style={{ width: "14px", height: "14px", display: "inline", marginRight: "0.25rem" }} />
+                        {caregiver.location.city}, {caregiver.location.state}
+                      </span>
+                      <span>•</span>
+                      <span>
+                        <Wallet className="cp-icon-sm" style={{ width: "14px", height: "14px", display: "inline", marginRight: "0.25rem" }} />
+                        R$ {caregiver.priceRange.min}-{caregiver.priceRange.max}/hora
+                      </span>
+                    </div>
                   </div>
-                  <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-600)", marginBottom: "var(--spacing-xs)" }}>
-                    {caregiver.bio.substring(0, 80)}...
-                  </p>
-                  <div style={{ display: "flex", gap: "var(--spacing-sm)", fontSize: "var(--font-size-xs)", color: "var(--color-gray-500)" }}>
-                    <span>{caregiver.location.city}, {caregiver.location.state}</span>
-                    <span>•</span>
-                    <span>R$ {caregiver.priceRange.min}-{caregiver.priceRange.max}/hora</span>
+                  <div className="cp-caregiver-rating">
+                    <Star className="cp-icon-sm" style={{ width: "16px", height: "16px", fill: "#f59e0b", color: "#f59e0b" }} />
+                    {caregiver.rating.toFixed(1)}
                   </div>
                 </div>
-              ))
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
-    </div>
+    </DashboardShell>
   );
 }

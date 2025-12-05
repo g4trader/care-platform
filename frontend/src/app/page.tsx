@@ -2,6 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { Book, ShoppingCart, Calendar, User, TrendingUp, Activity, CheckCircle, Star } from "lucide-react";
+import WhySection from "@/components/home/WhySection";
+import HowItWorks from "@/components/home/HowItWorks";
+import Testimonials from "@/components/home/Testimonials";
+import Metrics from "@/components/home/Metrics";
+import BeforeAfter from "@/components/home/BeforeAfter";
+import FinalCTA from "@/components/home/FinalCTA";
 
 export default function HomePage() {
   const router = useRouter();
@@ -193,32 +199,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="cta-section">
-        <div className="section-container">
-          <div className="cta-content">
-            <h2 className="cta-title">Pronto para começar?</h2>
-            <p className="cta-description">
-              Junte-se a centenas de cuidadores e contratantes que já transformaram
-              sua forma de trabalhar.
-            </p>
-            <div className="cta-buttons">
-              <button
-                className="btn btn-primary btn-large"
-                onClick={() => router.push("/login")}
-              >
-                Sou Cuidador
-              </button>
-              <button
-                className="btn btn-outline btn-large"
-                onClick={() => router.push("/login")}
-              >
-                Sou Contratante
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Why Section */}
+      <WhySection />
+
+      {/* How It Works Section */}
+      <HowItWorks />
+
+      {/* Testimonials Section */}
+      <Testimonials />
+
+      {/* Metrics Section */}
+      <Metrics />
+
+      {/* Before After Section */}
+      <BeforeAfter />
+
+      {/* Final CTA Section */}
+      <FinalCTA />
     </div>
   );
 }

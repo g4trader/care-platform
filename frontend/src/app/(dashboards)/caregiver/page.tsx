@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { apiClient } from "@/lib/api-client";
 import CaregiverOnboarding from "@/components/CaregiverOnboarding";
-import { Star } from "lucide-react";
+import { DashboardShell } from "@/components/layout/DashboardShell";
+import { Star, Calendar, Book, Award, Activity } from "lucide-react";
 
 interface Caregiver {
   id: string;
@@ -35,7 +36,7 @@ interface ClientRequest {
 }
 
 export default function CaregiverDashboard() {
-  const { userId, role, name, isAuthenticated, logout } = useAuth();
+  const { userId, role, isAuthenticated } = useAuth();
   const router = useRouter();
   const [caregiver, setCaregiver] = useState<Caregiver | null>(null);
   const [courses, setCourses] = useState<Course[]>([]);
@@ -94,146 +95,137 @@ export default function CaregiverDashboard() {
 
   if (loading) {
     return (
-      <div className="cp-page">
-        <div className="cp-container">
-          <div className="cp-card" style={{ textAlign: "center", padding: "var(--spacing-3xl)" }}>
-            <p>Carregando...</p>
-          </div>
+      <DashboardShell title="Painel do cuidador" roleLabel="CUIDADOR">
+        <div className="cp-card" style={{ textAlign: "center", padding: "var(--spacing-3xl)" }}>
+          <p>Carregando...</p>
         </div>
-      </div>
+      </DashboardShell>
     );
   }
 
   if (showOnboarding) {
-    return (
-      <div className="cp-page">
-        <div className="cp-container" style={{ maxWidth: "800px" }}>
-          <CaregiverOnboarding onComplete={loadData} />
-        </div>
-      </div>
-    );
+    return <CaregiverOnboarding onComplete={loadData} />;
   }
 
   return (
-    <div className="cp-page">
-      <div className="cp-container">
-        {/* Header */}
-        <div className="cp-page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-          <div>
-            <h1>Painel do cuidador</h1>
-            <p>Veja sua agenda, oportunidades e certificações em um só lugar.</p>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-md)" }}>
-            <div className="cp-user-pill">
-              <span>{name || "Usuário"}</span>
-              <span className="cp-user-pill-role">Cuidador</span>
+    <DashboardShell
+      title="Painel do cuidador"
+      subtitle="Veja sua agenda, oportunidades de cuidado e acompanhe seus relatórios."
+      roleLabel="CUIDADOR"
+    >
+      {/* Grid de 2 colunas */}
+      <div className="cp-dashboard-grid">
+        {/* Coluna Esquerda */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xl)" }}>
+          {/* Agenda da Semana */}
+          <div className="cp-card">
+            <div className="cp-card-header">
+              <div>
+                <h3 className="cp-card-title">Agenda da semana</h3>
+                <p className="cp-card-subtitle">3 serviços agendados</p>
+              </div>
             </div>
-            <button className="cp-btn cp-btn-ghost" onClick={logout} style={{ padding: "var(--spacing-sm) var(--spacing-md)" }}>
-              Sair
-            </button>
+            <div className="timeline">
+              <div className="timeline-item">
+                <div className="timeline-dot"></div>
+                <div className="timeline-content">
+                  <div className="timeline-time">Hoje, 14:00</div>
+                  <div className="timeline-text">Cuidado domiciliar - São Paulo, SP</div>
+                </div>
+              </div>
+              <div className="timeline-item">
+                <div className="timeline-dot"></div>
+                <div className="timeline-content">
+                  <div className="timeline-time">Amanhã, 09:00</div>
+                  <div className="timeline-text">Acompanhamento médico - São Paulo, SP</div>
+                </div>
+              </div>
+              <div className="timeline-item">
+                <div className="timeline-dot"></div>
+                <div className="timeline-content">
+                  <div className="timeline-time">Quinta, 10:00</div>
+                  <div className="timeline-text">Cuidado domiciliar - São Paulo, SP</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Pedidos Disponíveis */}
+          <div className="cp-card">
+            <div className="cp-card-header">
+              <div>
+                <h3 className="cp-card-title">Pedidos de cuidado disponíveis</h3>
+                <p className="cp-card-subtitle">{requests.length} oportunidades abertas</p>
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
+              {requests.length === 0 ? (
+                <div className="cp-empty-state">
+                  <Activity className="cp-empty-state-icon cp-icon-lg" style={{ width: "48px", height: "48px" }} />
+                  <h4 className="cp-empty-state-title">Nenhum pedido disponível</h4>
+                  <p className="cp-empty-state-text">
+                    Não há pedidos de cuidado abertos no momento.
+                  </p>
+                </div>
+              ) : (
+                requests.slice(0, 3).map((request) => (
+                  <div
+                    key={request.id}
+                    style={{
+                      padding: "var(--spacing-md)",
+                      border: "1px solid var(--color-gray-200)",
+                      borderRadius: "var(--radius-lg)",
+                      backgroundColor: "var(--color-gray-50)",
+                    }}
+                  >
+                    <div style={{ marginBottom: "var(--spacing-sm)" }}>
+                      <strong>
+                        {request.careType === "elderly" && "Cuidado de Idosos"}
+                        {request.careType === "children" && "Cuidado de Crianças"}
+                        {request.careType === "special_needs" && "Cuidado Especializado"}
+                      </strong>
+                    </div>
+                    <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-600)", margin: "var(--spacing-xs) 0" }}>
+                      {request.location.city}, {request.location.state}
+                    </p>
+                    <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-700)", marginBottom: "var(--spacing-md)" }}>
+                      {request.details.substring(0, 100)}...
+                    </p>
+                    <button
+                      className="cp-btn cp-btn-primary"
+                      onClick={() => handleInterest(request.id)}
+                      style={{ width: "100%", padding: "var(--spacing-sm) var(--spacing-md)", fontSize: "var(--font-size-sm)" }}
+                    >
+                      Registrar interesse
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Grid de 2 colunas */}
-        <div className="cp-grid-2">
-          {/* Coluna Esquerda */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xl)" }}>
-            {/* Agenda da Semana */}
-            <div className="cp-card">
-              <div className="cp-card-header">
-                <div>
-                  <h3 className="cp-card-title">Agenda da semana</h3>
-                  <p className="cp-card-subtitle">3 serviços agendados</p>
-                </div>
-              </div>
-              <div className="timeline">
-                <div className="timeline-item">
-                  <div className="timeline-dot"></div>
-                  <div className="timeline-content">
-                    <div className="timeline-time">Hoje, 14:00</div>
-                    <div className="timeline-text">Cuidado domiciliar - São Paulo, SP</div>
-                  </div>
-                </div>
-                <div className="timeline-item">
-                  <div className="timeline-dot"></div>
-                  <div className="timeline-content">
-                    <div className="timeline-time">Amanhã, 09:00</div>
-                    <div className="timeline-text">Acompanhamento médico - São Paulo, SP</div>
-                  </div>
-                </div>
-                <div className="timeline-item">
-                  <div className="timeline-dot"></div>
-                  <div className="timeline-content">
-                    <div className="timeline-time">Quinta, 10:00</div>
-                    <div className="timeline-text">Cuidado domiciliar - São Paulo, SP</div>
-                  </div>
-                </div>
+        {/* Coluna Direita */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xl)" }}>
+          {/* Certificações e Cursos */}
+          <div className="cp-card">
+            <div className="cp-card-header">
+              <div>
+                <h3 className="cp-card-title">Certificações e cursos</h3>
+                <p className="cp-card-subtitle">{courses.length} cursos disponíveis</p>
               </div>
             </div>
-
-            {/* Pedidos Disponíveis */}
-            <div className="cp-card">
-              <div className="cp-card-header">
-                <div>
-                  <h3 className="cp-card-title">Pedidos de cuidado disponíveis</h3>
-                  <p className="cp-card-subtitle">{requests.length} oportunidades abertas</p>
-                </div>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
-                {requests.length === 0 ? (
-                  <p style={{ color: "var(--color-gray-500)", textAlign: "center", padding: "var(--spacing-lg)" }}>
-                    Nenhum pedido disponível no momento.
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
+              {courses.length === 0 ? (
+                <div className="cp-empty-state">
+                  <Book className="cp-empty-state-icon cp-icon-lg" style={{ width: "48px", height: "48px" }} />
+                  <h4 className="cp-empty-state-title">Nenhum curso disponível</h4>
+                  <p className="cp-empty-state-text">
+                    Não há cursos cadastrados no momento.
                   </p>
-                ) : (
-                  requests.slice(0, 3).map((request) => (
-                    <div
-                      key={request.id}
-                      style={{
-                        padding: "var(--spacing-md)",
-                        border: "1px solid var(--color-gray-200)",
-                        borderRadius: "var(--radius-lg)",
-                        backgroundColor: "var(--color-gray-50)",
-                      }}
-                    >
-                      <div style={{ marginBottom: "var(--spacing-sm)" }}>
-                        <strong>
-                          {request.careType === "elderly" && "Cuidado de Idosos"}
-                          {request.careType === "children" && "Cuidado de Crianças"}
-                          {request.careType === "special_needs" && "Cuidado Especializado"}
-                        </strong>
-                      </div>
-                      <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-600)", margin: "var(--spacing-xs) 0" }}>
-                        {request.location.city}, {request.location.state}
-                      </p>
-                      <p style={{ fontSize: "var(--font-size-sm)", color: "var(--color-gray-700)", marginBottom: "var(--spacing-md)" }}>
-                        {request.details.substring(0, 100)}...
-                      </p>
-                      <button
-                        className="cp-btn cp-btn-primary"
-                        onClick={() => handleInterest(request.id)}
-                        style={{ width: "100%", padding: "var(--spacing-sm) var(--spacing-md)", fontSize: "var(--font-size-sm)" }}
-                      >
-                        Registrar interesse
-                      </button>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Coluna Direita */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xl)" }}>
-            {/* Certificações e Cursos */}
-            <div className="cp-card">
-              <div className="cp-card-header">
-                <div>
-                  <h3 className="cp-card-title">Certificações e cursos</h3>
-                  <p className="cp-card-subtitle">{courses.length} cursos disponíveis</p>
                 </div>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
-                {courses.slice(0, 3).map((course) => (
+              ) : (
+                courses.slice(0, 3).map((course) => (
                   <div
                     key={course.id}
                     style={{
@@ -267,38 +259,38 @@ export default function CaregiverDashboard() {
                       Ver detalhes
                     </button>
                   </div>
-                ))}
+                ))
+              )}
+            </div>
+          </div>
+
+          {/* Indicadores Rápidos */}
+          <div className="cp-card">
+            <div className="cp-card-header">
+              <div>
+                <h3 className="cp-card-title">Indicadores rápidos</h3>
               </div>
             </div>
-
-            {/* Indicadores Rápidos */}
-            <div className="cp-card">
-              <div className="cp-card-header">
-                <div>
-                  <h3 className="cp-card-title">Indicadores rápidos</h3>
+            <div className="cp-stat-row" style={{ flexDirection: "column", gap: "var(--spacing-lg)", borderTop: "none", paddingTop: 0 }}>
+              <div className="cp-stat-item">
+                <div className="cp-stat-value" style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                  {caregiver?.rating.toFixed(1) || "0.0"}
+                  <Star className="cp-icon-sm" style={{ width: "14px", height: "14px", color: "#f59e0b" }} />
                 </div>
+                <div className="cp-stat-label">Avaliação média</div>
               </div>
-              <div className="cp-stat-row" style={{ flexDirection: "column", gap: "var(--spacing-lg)", borderTop: "none", paddingTop: 0 }}>
-                <div className="cp-stat-item">
-                  <div className="cp-stat-value" style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
-                    {caregiver?.rating.toFixed(1) || "0.0"}
-                    <Star className="cp-icon-sm" style={{ width: "14px", height: "14px", color: "#f59e0b" }} />
-                  </div>
-                  <div className="cp-stat-label">Avaliação média</div>
-                </div>
-                <div className="cp-stat-item">
-                  <div className="cp-stat-value">127</div>
-                  <div className="cp-stat-label">Serviços realizados</div>
-                </div>
-                <div className="cp-stat-item">
-                  <div className="cp-stat-value">{caregiver?.certifications.length || 0}</div>
-                  <div className="cp-stat-label">Certificações</div>
-                </div>
+              <div className="cp-stat-item">
+                <div className="cp-stat-value">127</div>
+                <div className="cp-stat-label">Serviços realizados</div>
+              </div>
+              <div className="cp-stat-item">
+                <div className="cp-stat-value">{caregiver?.certifications.length || 0}</div>
+                <div className="cp-stat-label">Certificações</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </DashboardShell>
   );
 }
