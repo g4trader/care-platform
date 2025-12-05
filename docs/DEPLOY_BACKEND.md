@@ -9,14 +9,14 @@ O backend da Care Platform foi deployado com sucesso no Google Cloud Run.
 - **Projeto GCP:** `automatizar-452311`
 - **Região:** `southamerica-east1`
 - **Serviço:** `care-platform-backend`
-- **URL do Backend:** `https://care-platform-backend-609095880025.southamerica-east1.run.app`
+- **URL do Backend:** `https://care-platform-backend-6f3ckz7c7q-rj.a.run.app`
 
 ## 🧪 Testes
 
 ### Endpoint de Health Check
 
 ```bash
-curl https://care-platform-backend-609095880025.southamerica-east1.run.app/api/health
+curl https://care-platform-backend-6f3ckz7c7q-rj.a.run.app/api/health
 ```
 
 **Resposta esperada:**
@@ -27,7 +27,7 @@ curl https://care-platform-backend-609095880025.southamerica-east1.run.app/api/h
 ### Endpoint Raiz
 
 ```bash
-curl https://care-platform-backend-609095880025.southamerica-east1.run.app/
+curl https://care-platform-backend-6f3ckz7c7q-rj.a.run.app/
 ```
 
 **Resposta esperada:**
@@ -68,7 +68,7 @@ Para que o frontend (deployado na Vercel) se conecte ao backend no Cloud Run, vo
 
 4. Adicione uma nova variável:
    - **Name:** `NEXT_PUBLIC_API_URL`
-   - **Value:** `https://care-platform-backend-609095880025.southamerica-east1.run.app`
+   - **Value:** `https://care-platform-backend-6f3ckz7c7q-rj.a.run.app`
    - **Environment:** Selecione todas as opções (Production, Preview, Development)
 
 5. Clique em **Save**
@@ -86,7 +86,7 @@ Após o redeploy, o frontend estará usando o backend do Cloud Run. Você pode v
 1. Abra o DevTools do navegador (F12)
 2. Vá na aba **Network**
 3. Faça uma requisição (ex: login)
-4. Verifique que as requisições estão indo para: `https://care-platform-backend-609095880025.southamerica-east1.run.app`
+4. Verifique que as requisições estão indo para: `https://care-platform-backend-6f3ckz7c7q-rj.a.run.app`
 
 ## 📝 Arquivos Criados/Modificados
 
@@ -160,5 +160,5 @@ gcloud run services logs read care-platform-backend \
 ---
 
 **Última atualização:** 05/12/2025  
-**URL do Backend:** `https://care-platform-backend-609095880025.southamerica-east1.run.app`
+**URL do Backend:** `https://care-platform-backend-6f3ckz7c7q-rj.a.run.app`
 
