@@ -95,7 +95,7 @@ export default function CaregiverDashboard() {
 
   if (loading) {
     return (
-      <DashboardShell title="Painel do cuidador" roleLabel="CUIDADOR">
+      <DashboardShell title="Painel do cuidador">
         <div className="cp-card" style={{ textAlign: "center", padding: "var(--spacing-3xl)" }}>
           <p>Carregando...</p>
         </div>
@@ -111,7 +111,6 @@ export default function CaregiverDashboard() {
     <DashboardShell
       title="Painel do cuidador"
       subtitle="Veja sua agenda, oportunidades de cuidado e acompanhe seus relatórios."
-      roleLabel="CUIDADOR"
     >
       {/* Grid de 2 colunas */}
       <div className="cp-dashboard-grid">

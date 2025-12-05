@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { Book, ShoppingCart, BarChart2, User, Home, Shield, TrendingUp, Activity, CheckCircle } from "lucide-react";
+import Image from "next/image";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -162,7 +163,13 @@ export default function LoginPage() {
             <div className="cp-auth-card">
               {/* Logo/Topo */}
               <div className="cp-auth-card-header">
-                <h2 className="cp-auth-card-logo">Care Platform</h2>
+                <Image
+                  src="/logo-care-platform.svg"
+                  alt="Care Platform"
+                  width={120}
+                  height={28}
+                  style={{ marginBottom: "var(--spacing-sm)" }}
+                />
                 <p className="cp-auth-card-subtitle">Plataforma completa para cuidadores e contratantes</p>
               </div>
 

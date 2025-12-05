@@ -117,7 +117,7 @@ export default function ClientDashboard() {
 
   if (loading) {
     return (
-      <DashboardShell title="Painel do contratante" roleLabel="CONTRATANTE">
+      <DashboardShell title="Painel do contratante">
         <div className="cp-card" style={{ textAlign: "center", padding: "var(--spacing-3xl)" }}>
           <p>Carregando...</p>
         </div>
@@ -129,7 +129,6 @@ export default function ClientDashboard() {
     <DashboardShell
       title="Painel do contratante"
       subtitle="Crie pedidos de cuidado e acompanhe quem está atendendo sua família."
-      roleLabel="CONTRATANTE"
     >
       {/* CAMADA 1 - Resumo Rápido */}
       <div className="cp-metrics-summary">

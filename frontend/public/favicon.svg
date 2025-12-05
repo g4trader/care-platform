@@ -1,0 +1,6 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- FAVICON - Usar logo-care-icon.svg quando disponível -->
+  <rect width="32" height="32" rx="8" fill="#2563eb"/>
+  <path d="M16 10L18 14L22 16L18 18L16 22L14 18L10 16L14 14L16 10Z" fill="white"/>
+</svg>
+

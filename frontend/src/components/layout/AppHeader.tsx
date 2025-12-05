@@ -32,11 +32,10 @@ export function AppHeader() {
           <Image
             src="/logo-care-platform.svg"
             alt="Care Platform"
-            width={28}
-            height={28}
+            width={140}
+            height={32}
             priority
           />
-          <span>Care Platform</span>
         </Link>
 
         <nav className="cp-nav">

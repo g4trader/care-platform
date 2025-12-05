@@ -11,15 +11,12 @@ export function AppFooter() {
       <div className="cp-container cp-footer-inner">
         <div className="cp-footer-main">
           <div className="cp-footer-brand">
-            <div className="cp-logo">
-              <Image
-                src="/logo-care-platform.svg"
-                alt="Care Platform"
-                width={28}
-                height={28}
-              />
-              <span>Care Platform</span>
-            </div>
+            <Image
+              src="/logo-care-platform.svg"
+              alt="Care Platform"
+              width={130}
+              height={30}
+            />
             <p>Plataforma completa para cuidadores profissionais e contratantes.</p>
           </div>
 
