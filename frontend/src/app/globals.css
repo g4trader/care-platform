@@ -2875,43 +2875,57 @@ body {
   .cp-footer-inner {
     padding: 48px 32px 32px;
     gap: 40px;
+    align-items: center; /* Centraliza todo o conteúdo */
+    text-align: center;
   }
 
   .cp-footer-brand {
     display: flex;
     flex-direction: column; /* Tagline abaixo da logo */
     gap: var(--spacing-md);
+    align-items: center; /* Centraliza logo e tagline */
+    text-align: center;
   }
 
   .cp-footer-brand img {
     height: 132px; /* Desktop: aumentado 200% (44px * 3 = 132px) */
     max-width: 400px;
     flex-shrink: 0;
+    margin: 0 auto; /* Centraliza a logo */
   }
 
   .cp-footer-tagline {
     max-width: 400px;
-    margin: 0;
+    margin: 0 auto; /* Centraliza a tagline */
+    text-align: center;
   }
 
   .cp-footer-columns {
     flex-direction: row;
     gap: var(--spacing-3xl);
-    justify-content: flex-start;
+    justify-content: center; /* Centraliza os blocos de navegação */
   }
 
   .cp-footer-column {
     min-width: 160px;
+    text-align: left; /* Links alinhados à esquerda dentro de cada coluna */
+  }
+
+  .cp-footer-column h4 {
+    text-align: center; /* Títulos centralizados */
   }
 
   .cp-footer-bottom {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center; /* Centraliza o bloco legal */
     align-items: center;
+    gap: var(--spacing-xl);
+    text-align: center;
   }
 
   .cp-footer-legal {
     gap: var(--spacing-xl);
+    justify-content: center;
   }
 }
 
