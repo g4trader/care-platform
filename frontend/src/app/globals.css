@@ -2879,9 +2879,8 @@ body {
 
   .cp-footer-brand {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: var(--spacing-lg);
+    flex-direction: column; /* Tagline abaixo da logo */
+    gap: var(--spacing-md);
   }
 
   .cp-footer-brand img {
@@ -2891,7 +2890,7 @@ body {
   }
 
   .cp-footer-tagline {
-    max-width: 300px;
+    max-width: 400px;
     margin: 0;
   }
 
