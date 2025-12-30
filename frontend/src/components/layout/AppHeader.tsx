@@ -32,8 +32,8 @@ export function AppHeader() {
           <Image
             src="/logo-care-platform.svg"
             alt="Care Platform"
-            width={260}
-            height={62}
+            width={390}
+            height={93}
             priority
             className="cp-logo-img"
           />

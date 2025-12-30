@@ -166,8 +166,8 @@ export default function LoginPage() {
                 <Image
                   src="/logo-care-platform.svg"
                   alt="Care Platform"
-                  width={234}
-                  height={55}
+                  width={351}
+                  height={83}
                   style={{ marginBottom: "var(--spacing-sm)" }}
                 />
                 <p className="cp-auth-card-subtitle">Plataforma completa para cuidadores e contratantes</p>

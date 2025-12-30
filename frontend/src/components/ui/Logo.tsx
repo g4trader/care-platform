@@ -6,7 +6,7 @@ interface LogoProps {
   priority?: boolean;
 }
 
-export function Logo({ size = 182, className, priority = false }: LogoProps) {
+export function Logo({ size = 273, className, priority = false }: LogoProps) {
   return (
     <Image
       src="/logo-care-platform.svg"

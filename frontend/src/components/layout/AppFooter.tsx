@@ -14,8 +14,8 @@ export function AppFooter() {
             <Image
               src="/logo-care-platform.svg"
               alt="Care Platform"
-              width={234}
-              height={55}
+              width={351}
+              height={83}
             />
             <p>Plataforma completa para cuidadores profissionais e contratantes.</p>
           </div>
