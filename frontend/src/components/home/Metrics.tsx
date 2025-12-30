@@ -8,42 +8,42 @@ const metrics = [
     value: "500+",
     label: "Cuidadores ativos",
     description: "Profissionais certificados na plataforma",
-    color: "#3b82f6",
+    color: "#1F5EA8", // Azul principal
   },
   {
     icon: Clock,
     value: "1.2k+",
     label: "Serviços realizados",
     description: "Atendimentos concluídos com sucesso",
-    color: "#28a745",
+    color: "#5FAF8E", // Verde institucional
   },
   {
     icon: Award,
     value: "98%",
     label: "Taxa de satisfação",
     description: "Avaliação média dos usuários",
-    color: "#f59e0b",
+    color: "#5FAF8E", // Verde institucional
   },
   {
     icon: TrendingUp,
     value: "45%",
     label: "Aumento de renda",
     description: "Média de crescimento salarial dos cuidadores",
-    color: "#8b5cf6",
+    color: "#1F5EA8", // Azul principal
   },
   {
     icon: Heart,
     value: "2.5k+",
     label: "Famílias atendidas",
     description: "Pessoas que receberam cuidado de qualidade",
-    color: "#ec4899",
+    color: "#5FAF8E", // Verde institucional
   },
   {
     icon: CheckCircle,
     value: "150+",
     label: "Certificações emitidas",
     description: "Profissionais qualificados este mês",
-    color: "#10b981",
+    color: "#5FAF8E", // Verde institucional
   },
 ];
 
