@@ -2531,6 +2531,10 @@ body {
   margin-bottom: 0.6rem;
 }
 
+.cp-footer-logo-mono {
+  filter: brightness(0) invert(1);
+}
+
 .cp-footer-brand p {
   font-size: 0.9rem;
   color: var(--color-gray-300);

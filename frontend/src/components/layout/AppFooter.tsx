@@ -16,6 +16,7 @@ export function AppFooter() {
               alt="Care Platform"
               width={351}
               height={83}
+              className="cp-footer-logo-mono"
             />
             <p>Plataforma completa para cuidadores profissionais e contratantes.</p>
           </div>
