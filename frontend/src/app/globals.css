@@ -2389,7 +2389,7 @@ body {
   display: block;
   object-fit: contain;
   width: auto !important;
-  height: 32px !important;
+  height: 48px !important;
   flex-shrink: 0;
 }
 
@@ -2443,7 +2443,7 @@ body {
 
   .cp-logo img,
   .cp-logo-img {
-    height: 28px !important;
+    height: 40px !important;
     width: auto !important;
   }
 }
@@ -2451,9 +2451,9 @@ body {
 @media (max-width: 640px) {
   .cp-logo img,
   .cp-logo-img {
-    height: 28px !important;
+    height: 36px !important;
     width: auto !important;
-    max-width: 120px;
+    max-width: 160px;
   }
 
   .cp-footer-brand img {
