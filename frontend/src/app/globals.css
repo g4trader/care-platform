@@ -2763,9 +2763,9 @@ body {
 .cp-footer-brand img {
   display: block;
   object-fit: contain;
-  height: 40px; /* Altura maior no mobile */
+  height: 120px; /* Mobile: aumentado 200% (40px * 3 = 120px) */
   width: auto;
-  max-width: 280px;
+  max-width: 100%;
 }
 
 .cp-footer-logo-mono {
@@ -2878,7 +2878,7 @@ body {
   }
 
   .cp-footer-brand img {
-    height: 44px;
+    height: 44px; /* Desktop mantém tamanho original */
     max-width: 320px;
   }
 
