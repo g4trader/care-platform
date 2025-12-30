@@ -12,13 +12,13 @@ body {
    ============================================ */
 
 :root {
-  /* Colors - Academia de Cuidadores Brand Palette */
-  --color-primary: #1F5EA8; /* Azul principal (brand) */
-  --color-primary-dark: #1a4d8a; /* Azul escuro para hover */
-  --color-primary-light: #2E7BCF; /* Azul secundário */
-  --color-secondary: #5FAF8E; /* Verde institucional */
-  --color-secondary-light: #8FD3B3; /* Verde suave */
-  --color-accent: #5FAF8E; /* Usar verde para acentos */
+  /* Colors - Academia de Cuidadores Brand Palette (Refinado) */
+  --color-primary: #1E5A9F; /* Azul principal (saturação reduzida) */
+  --color-primary-dark: #164580; /* Azul escuro para hover e grandes blocos */
+  --color-primary-light: #2A6DB5; /* Azul secundário (menos saturado) */
+  --color-secondary: #5FAF8E; /* Verde institucional (apenas indicadores) */
+  --color-secondary-light: #8FD3B3; /* Verde suave (realces sutis) */
+  --color-accent: #5FAF8E; /* Verde para acentos específicos */
   
   /* Neutrals */
   --color-gray-50: #F4F7FB; /* Background claro */
@@ -35,9 +35,9 @@ body {
   /* Backgrounds */
   --bg-primary: #ffffff;
   --bg-secondary: #F4F7FB; /* Background geral */
-  --bg-gradient: linear-gradient(135deg, #1F5EA8 0%, #2E7BCF 100%); /* Gradiente azul */
+  --bg-gradient: linear-gradient(135deg, #164580 0%, #1E5A9F 100%); /* Gradiente azul escurecido para CTAs */
   --bg-gradient-light: linear-gradient(135deg, #E8F0F8 0%, #F4F7FB 100%); /* Gradiente suave azul claro */
-  --bg-gradient-hero: linear-gradient(135deg, #E8F0F8 0%, #ffffff 100%); /* Hero gradient */
+  --bg-gradient-hero: linear-gradient(180deg, #E8F0F8 0%, #F4F7FB 50%, #ffffff 100%); /* Hero gradient sutil */
   
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -105,8 +105,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 20% 50%, rgba(31, 94, 168, 0.08) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(95, 175, 142, 0.08) 0%, transparent 50%);
+  background: radial-gradient(circle at 20% 50%, rgba(30, 90, 159, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(95, 175, 142, 0.04) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -146,7 +146,7 @@ body {
   font-size: var(--font-size-5xl);
   font-weight: 800;
   line-height: 1.1;
-  color: var(--color-gray-900);
+  color: var(--color-primary);
   margin: 0;
   letter-spacing: -0.02em;
 }
@@ -154,7 +154,7 @@ body {
 .hero-subheadline {
   font-size: var(--font-size-xl);
   line-height: 1.6;
-  color: var(--color-gray-600);
+  color: var(--color-gray-800);
   margin: 0;
   max-width: 90%;
 }
@@ -183,6 +183,10 @@ body {
   font-weight: 700;
   color: var(--color-primary);
   line-height: 1;
+}
+
+.stat-number svg {
+  color: var(--color-primary);
 }
 
 .stat-label {
@@ -378,9 +382,14 @@ body {
 }
 
 .btn-primary:hover {
-  background: var(--color-primary-light);
+  background: var(--color-primary-dark);
   box-shadow: var(--shadow-lg);
   transform: translateY(-1px);
+}
+
+.btn-primary:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .btn-primary:active {
@@ -396,8 +405,15 @@ body {
 
 .btn-secondary:hover {
   background: var(--color-gray-50);
+  border-color: var(--color-primary-dark);
+  color: var(--color-primary-dark);
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
+}
+
+.btn-secondary:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .btn-outline {
@@ -436,14 +452,14 @@ body {
 .section-title {
   font-size: var(--font-size-4xl);
   font-weight: 800;
-  color: var(--color-gray-900);
+  color: var(--color-primary);
   margin: 0 0 var(--spacing-md) 0;
   letter-spacing: -0.02em;
 }
 
 .section-description {
   font-size: var(--font-size-lg);
-  color: var(--color-gray-600);
+  color: var(--color-gray-800);
   margin: 0;
   max-width: 600px;
   margin-left: auto;
@@ -471,7 +487,7 @@ body {
 .pillar-card:hover {
   box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
-  border-color: var(--color-primary-light);
+  border-color: var(--color-primary);
 }
 
 .pillar-icon {
@@ -487,14 +503,14 @@ body {
 .pillar-title {
   font-size: var(--font-size-2xl);
   font-weight: 700;
-  color: var(--color-gray-900);
+  color: var(--color-primary);
   margin: 0;
 }
 
 .pillar-description {
   font-size: var(--font-size-base);
   line-height: 1.6;
-  color: var(--color-gray-600);
+  color: var(--color-gray-800);
   margin: 0;
   flex: 1;
 }
@@ -596,8 +612,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 20% 50%, rgba(31, 94, 168, 0.08) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(95, 175, 142, 0.08) 0%, transparent 50%);
+  background: radial-gradient(circle at 20% 50%, rgba(30, 90, 159, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(95, 175, 142, 0.04) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -616,14 +632,14 @@ body {
 .cp-page-header h1 {
   font-size: var(--font-size-4xl);
   font-weight: 800;
-  color: var(--color-gray-900);
+  color: var(--color-primary);
   margin: 0 0 var(--spacing-md) 0;
   letter-spacing: -0.02em;
 }
 
 .cp-page-header p {
   font-size: var(--font-size-lg);
-  color: var(--color-gray-600);
+  color: var(--color-gray-800);
   margin: 0;
   line-height: 1.6;
 }
@@ -655,13 +671,13 @@ body {
 .cp-card-title {
   font-size: var(--font-size-xl);
   font-weight: 700;
-  color: var(--color-gray-900);
+  color: var(--color-primary);
   margin: 0;
 }
 
 .cp-card-subtitle {
   font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
+  color: var(--color-gray-800);
   margin: var(--spacing-xs) 0 0 0;
 }
 
@@ -702,9 +718,14 @@ body {
 }
 
 .cp-btn-primary:hover {
-  background: var(--color-primary-light);
+  background: var(--color-primary-dark);
   box-shadow: var(--shadow-lg);
   transform: translateY(-1px);
+}
+
+.cp-btn-primary:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .cp-btn-primary:active {
@@ -720,8 +741,15 @@ body {
 
 .cp-btn-secondary:hover {
   background: var(--color-gray-50);
+  border-color: var(--color-primary-dark);
+  color: var(--color-primary-dark);
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
+}
+
+.cp-btn-secondary:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .cp-btn-ghost {
@@ -991,8 +1019,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 20% 50%, rgba(31, 94, 168, 0.08) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(95, 175, 142, 0.08) 0%, transparent 50%);
+  background: radial-gradient(circle at 20% 50%, rgba(30, 90, 159, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(95, 175, 142, 0.04) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -1387,7 +1415,7 @@ body {
 .cp-section-title {
   font-size: var(--font-size-4xl);
   font-weight: 700;
-  color: var(--color-gray-900);
+  color: var(--color-primary);
   margin: 0 0 var(--spacing-md) 0;
   text-align: center;
   line-height: 1.2;
@@ -1395,7 +1423,7 @@ body {
 
 .cp-section-text {
   font-size: var(--font-size-lg);
-  color: var(--color-gray-600);
+  color: var(--color-gray-800);
   text-align: center;
   max-width: 700px;
   margin: 0 auto var(--spacing-2xl);
@@ -1416,6 +1444,10 @@ body {
   box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
   border-color: var(--color-primary);
+}
+
+.cp-feature-card .cp-card-title {
+  color: var(--color-primary);
 }
 
 /* Steps Grid */
@@ -1503,13 +1535,13 @@ body {
 .cp-testimonial-name {
   font-size: var(--font-size-lg);
   font-weight: 600;
-  color: var(--color-gray-900);
+  color: var(--color-primary);
   margin: 0 0 var(--spacing-xs) 0;
 }
 
 .cp-testimonial-role {
   font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
+  color: var(--color-gray-800);
   margin: 0 0 var(--spacing-xs) 0;
 }
 
@@ -1526,7 +1558,7 @@ body {
 }
 
 .cp-testimonial-quote {
-  color: var(--color-gray-700);
+  color: var(--color-gray-800);
   line-height: 1.6;
   font-size: var(--font-size-base);
 }
@@ -1604,13 +1636,13 @@ body {
 .cp-metric-label {
   font-size: var(--font-size-lg);
   font-weight: 600;
-  color: var(--color-gray-900);
+  color: var(--color-primary);
   margin: 0 0 var(--spacing-sm) 0;
 }
 
 .cp-metric-description {
   font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
+  color: var(--color-gray-800);
   margin: 0;
 }
 
@@ -1646,7 +1678,7 @@ body {
 .cp-comparison-title {
   font-size: var(--font-size-xl);
   font-weight: 600;
-  color: var(--color-gray-900);
+  color: var(--color-primary);
   margin: 0 0 var(--spacing-lg) 0;
 }
 
@@ -1664,7 +1696,7 @@ body {
   gap: var(--spacing-md);
   align-items: flex-start;
   font-size: var(--font-size-base);
-  color: var(--color-gray-700);
+  color: var(--color-gray-800);
   line-height: 1.6;
 }
 
@@ -1717,7 +1749,7 @@ body {
 
 /* Footer */
 .cp-footer {
-  background: #1a4d8a; /* Azul mais escuro baseado no primary */
+  background: var(--color-primary-dark); /* Azul escurecido para footer */
   color: var(--color-gray-100);
   padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-xl);
 }
@@ -2211,14 +2243,14 @@ body {
 .cp-metric-summary-value {
   font-size: var(--font-size-3xl);
   font-weight: 700;
-  color: var(--color-gray-900);
+  color: var(--color-primary);
   margin: 0 0 var(--spacing-xs) 0;
   line-height: 1;
 }
 
 .cp-metric-summary-label {
   font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
+  color: var(--color-gray-800);
   margin: 0;
 }
 
@@ -2471,7 +2503,7 @@ body {
 .cp-app-footer {
   margin-top: 4rem;
   border-top: 1px solid rgba(226, 232, 240, 1);
-  background: #1a4d8a; /* Azul mais escuro para footer */
+  background: var(--color-primary-dark); /* Azul escurecido para footer */
   color: var(--color-gray-100);
 }
 
