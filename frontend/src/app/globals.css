@@ -2758,6 +2758,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+  align-items: flex-start; /* Mobile: alinhado à esquerda */
 }
 
 .cp-footer-brand img {
@@ -2774,7 +2775,7 @@ body {
 
 .cp-footer-tagline {
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   margin: 0;
   line-height: 1.6;
   max-width: 100%;
@@ -2791,13 +2792,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+  align-items: flex-start; /* Links alinhados à esquerda */
 }
 
 .cp-footer-column h4 {
   font-size: var(--font-size-base);
   font-weight: 600;
   color: white;
-  margin: 0 0 var(--spacing-xs) 0;
+  margin: 0 0 var(--spacing-sm) 0;
   letter-spacing: 0.01em;
 }
 
@@ -2805,7 +2807,7 @@ body {
 .cp-footer-link-muted {
   display: block;
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   transition: color var(--transition-base);
   padding: var(--spacing-xs) 0;
@@ -2818,12 +2820,12 @@ body {
 }
 
 .cp-footer-link-muted {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   cursor: default;
 }
 
 .cp-footer-link-muted:hover {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* 3️⃣ Separador Visual */
@@ -2840,11 +2842,12 @@ body {
   flex-direction: column; /* Mobile: empilhado */
   gap: var(--spacing-md);
   padding-top: 0;
+  align-items: flex-start; /* Mobile: alinhado à esquerda */
 }
 
 .cp-footer-copyright {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8);
   margin: 0;
   line-height: 1.6;
 }
@@ -2857,7 +2860,7 @@ body {
 
 .cp-footer-legal a {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   transition: color var(--transition-base);
   padding: var(--spacing-xs) 0;
@@ -2870,62 +2873,103 @@ body {
   color: var(--color-secondary-light); /* Verde suave no hover */
 }
 
-/* Desktop: layout horizontal */
+/* Desktop: layout institucional estruturado */
 @media (min-width: 769px) {
   .cp-footer-inner {
-    padding: 48px 32px 32px;
-    gap: 40px;
-    align-items: center; /* Centraliza todo o conteúdo */
-    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 48px 32px; /* Respiro lateral confortável */
+    gap: 48px;
+    align-items: stretch; /* Remove centralização */
   }
 
+  /* 1️⃣ Bloco de Identidade - Alinhado à esquerda */
   .cp-footer-brand {
     display: flex;
-    flex-direction: column; /* Tagline abaixo da logo */
+    flex-direction: column;
     gap: var(--spacing-md);
-    align-items: center; /* Centraliza logo e tagline */
-    text-align: center;
+    align-items: flex-start; /* Alinhado à esquerda */
+    text-align: left;
   }
 
   .cp-footer-brand img {
-    height: 132px; /* Desktop: aumentado 200% (44px * 3 = 132px) */
-    max-width: 400px;
+    height: 48px; /* Tamanho ideal para desktop (40-48px) */
+    max-width: 300px;
     flex-shrink: 0;
-    margin: 0 auto; /* Centraliza a logo */
+    margin: 0; /* Remove centralização */
   }
 
   .cp-footer-tagline {
     max-width: 400px;
-    margin: 0 auto; /* Centraliza a tagline */
-    text-align: center;
+    margin: 0; /* Remove centralização */
+    text-align: left;
+    color: rgba(255, 255, 255, 0.9);
   }
 
+  /* 2️⃣ Grid de Navegação - Organizado e simétrico */
   .cp-footer-columns {
-    flex-direction: row;
-    gap: var(--spacing-3xl);
-    justify-content: center; /* Centraliza os blocos de navegação */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas bem definidas */
+    gap: 48px; /* Espaçamento generoso entre colunas */
+    align-items: start;
   }
 
   .cp-footer-column {
-    min-width: 160px;
-    text-align: left; /* Links alinhados à esquerda dentro de cada coluna */
+    min-width: 0; /* Permite flexibilidade */
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
   }
 
   .cp-footer-column h4 {
-    text-align: center; /* Títulos centralizados */
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: white;
+    margin: 0 0 var(--spacing-md) 0;
+    text-align: left; /* Títulos alinhados à esquerda */
   }
 
+  .cp-footer-column a,
+  .cp-footer-link-muted {
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.9);
+    text-align: left;
+  }
+
+  /* 3️⃣ Separador - Margem generosa */
+  .cp-footer-divider {
+    margin: 24px 0; /* Margem generosa acima e abaixo */
+  }
+
+  /* 4️⃣ Rodapé Legal - Texto à esquerda, links à direita */
   .cp-footer-bottom {
+    display: flex;
     flex-direction: row;
-    justify-content: center; /* Centraliza o bloco legal */
+    justify-content: space-between; /* Texto à esquerda, links à direita */
     align-items: center;
     gap: var(--spacing-xl);
-    text-align: center;
+    padding-top: 0;
+  }
+
+  .cp-footer-copyright {
+    font-size: var(--font-size-xs);
+    color: rgba(255, 255, 255, 0.8);
+    text-align: left;
+    margin: 0;
   }
 
   .cp-footer-legal {
+    display: flex;
     gap: var(--spacing-xl);
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: flex-end; /* Links à direita */
+  }
+
+  .cp-footer-legal a {
+    font-size: var(--font-size-xs);
+    color: rgba(255, 255, 255, 0.9);
+    white-space: nowrap;
   }
 }
 
