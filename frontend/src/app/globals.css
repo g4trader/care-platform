@@ -2877,9 +2877,22 @@ body {
     gap: 40px;
   }
 
+  .cp-footer-brand {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-lg);
+  }
+
   .cp-footer-brand img {
-    height: 44px; /* Desktop mantém tamanho original */
-    max-width: 320px;
+    height: 132px; /* Desktop: aumentado 200% (44px * 3 = 132px) */
+    max-width: 400px;
+    flex-shrink: 0;
+  }
+
+  .cp-footer-tagline {
+    max-width: 300px;
+    margin: 0;
   }
 
   .cp-footer-columns {
