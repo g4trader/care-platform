@@ -12,10 +12,10 @@ export function AppFooter() {
         {/* 1️⃣ Bloco de Identidade */}
         <div className="cp-footer-brand">
           <Image
-            src="/logo-care-platform.svg"
+            src="/logo_principal_horizontal.png"
             alt="Academia de Cuidadores"
-            width={280}
-            height={66}
+            width={1080}
+            height={323}
             className="cp-footer-logo-mono"
           />
           <p className="cp-footer-tagline">Plataforma completa para cuidadores e famílias.</p>

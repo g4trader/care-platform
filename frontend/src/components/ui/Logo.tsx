@@ -7,12 +7,17 @@ interface LogoProps {
 }
 
 export function Logo({ size = 273, className, priority = false }: LogoProps) {
+  // Proporção do logo: 1080x323 = 3.34:1
+  const logoWidth = size;
+  const logoHeight = size / 3.34;
+  
   return (
     <Image
-      src="/logo-care-platform.svg"
-      alt="Care Platform"
-      width={size}
-      height={size * 0.23}
+      src="/logo_principal_horizontal.png"
+      alt="Academia de Cuidadores"
+      width={1080}
+      height={323}
+      style={{ width: logoWidth, height: logoHeight }}
       className={className}
       priority={priority}
     />

@@ -164,11 +164,11 @@ export default function LoginPage() {
               {/* Logo/Topo */}
               <div className="cp-auth-card-header">
                 <Image
-                  src="/logo-care-platform.svg"
-                  alt="Care Platform"
-                  width={351}
-                  height={83}
-                  style={{ marginBottom: "var(--spacing-sm)" }}
+                  src="/logo_principal_horizontal.png"
+                  alt="Academia de Cuidadores"
+                  width={1080}
+                  height={323}
+                  style={{ width: 351, height: 83, marginBottom: "var(--spacing-sm)" }}
                 />
                 <p className="cp-auth-card-subtitle">Plataforma completa para cuidadores e contratantes</p>
               </div>

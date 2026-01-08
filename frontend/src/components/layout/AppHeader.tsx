@@ -52,10 +52,10 @@ export function AppHeader() {
           {/* Logo - visível em todas as telas */}
           <Link href="/" className="cp-logo" onClick={handleMenuLinkClick}>
             <Image
-              src="/logo-care-platform.svg"
-              alt="Care Platform"
-              width={390}
-              height={93}
+              src="/logo_principal_horizontal.png"
+              alt="Academia de Cuidadores"
+              width={1080}
+              height={323}
               priority
               className="cp-logo-img"
             />
