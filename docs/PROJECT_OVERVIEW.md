@@ -388,3 +388,4 @@ NEXT_PUBLIC_API_URL=http://localhost:8080
 
 **Última atualização**: Janeiro 2025
 
+

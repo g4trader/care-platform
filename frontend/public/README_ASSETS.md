@@ -46,3 +46,4 @@ Os PDFs do logo estão disponíveis em `../public/pdf/`:
 - Os arquivos PNG foram gerados a partir do kit de apps mobile
 - O favicon.svg referencia o logo-care-icon.svg para manter consistência
 
+
